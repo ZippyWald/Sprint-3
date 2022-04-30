@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Playerstealthmeter : MonoBehaviour
 {
     public Sprite[] eyestatus;
-    public Lightscript visible;
+    public bool islooking;
     float eyebar;
     public Image eye;
     public Image eyemeter;
@@ -20,13 +20,22 @@ public class Playerstealthmeter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     if (visible.islooking == false)
+     if (islooking == false)
+        {
+            if (eyebar < 0)
             {
-            eyebar -= eyemeterspeed * Time.deltaTime;
+                eyebar = 0;
+            }
+            if (eyebar >= 0)
+            {
+                eyebar -= eyemeterspeed * Time.deltaTime;
+            }
+            
+
         }
         eyemeter.fillAmount = eyebar / 100;
 
-        if (visible.islooking == true)
+        if (islooking == true)
         {
             Caught();
         }
@@ -57,6 +66,7 @@ public class Playerstealthmeter : MonoBehaviour
         if (eyebar > 60 && eyebar < 70)
         {
             eye.sprite = eyestatus[6];
+            eyemeter.color = Color.red;
         }
         if (eyebar > 70 && eyebar < 85)
         {
@@ -65,14 +75,27 @@ public class Playerstealthmeter : MonoBehaviour
         if (eyebar > 85 && eyebar < 99)
         {
             eye.sprite = eyestatus[8];
+            
         }
         if (eyebar >=  100)
         {
             eye.sprite = eyestatus[9];
         }
+        if (eyebar < 60)
+        {
+            eyemeter.color = Color.white;
+        }
     }
     void Caught()
     {
-        eyebar += eyemeterspeed * Time.deltaTime;
+        if (eyebar < 100)
+        {
+            eyebar += eyemeterspeed * Time.deltaTime;
+        }
+        if (eyebar >= 100)
+        {
+            eyebar = 100;
+        }
+        
     }
 }

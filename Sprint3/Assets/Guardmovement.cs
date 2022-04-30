@@ -6,7 +6,6 @@ public class Guardmovement : MonoBehaviour
 {
     //movement
     public float walkSpeed = 4;
-    float speedLimiter = 0.6f;
     Vector2 movement;
     Rigidbody2D rb;
 

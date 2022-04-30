@@ -10,6 +10,7 @@ public class Lightscript : MonoBehaviour
     public GameObject player;
     public float flashlightlength;
     public bool eyesight;
+    public Playerstealthmeter visibility;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class Lightscript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (eyesight == true)
         {
           
@@ -30,14 +32,14 @@ public class Lightscript : MonoBehaviour
                 if (findplayer.collider.tag == "Player")
                 {
                     flashlight.color = Color.red;
-                    islooking = true;
+                    visibility.islooking = true;
                     
                 }
 
                 if (findplayer.collider.tag != "Player")
                 {
                     flashlight.color = Color.white;
-                    islooking = false;
+                    visibility.islooking = false;
                 }
 
             }
@@ -59,7 +61,8 @@ public class Lightscript : MonoBehaviour
 
             eyesight = false;
             flashlight.color = Color.white;
-            islooking = false;
+            visibility.islooking = false;
+
 
         }
     }
