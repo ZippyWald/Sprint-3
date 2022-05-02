@@ -12,6 +12,7 @@ public class Lightscript : MonoBehaviour
     public bool eyesight;
     public Playerstealthmeter visibility;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,7 @@ public class Lightscript : MonoBehaviour
                 {
                     flashlight.color = Color.red;
                     visibility.islooking = true;
+
                     
                 }
 
@@ -66,4 +68,5 @@ public class Lightscript : MonoBehaviour
 
         }
     }
+
 }

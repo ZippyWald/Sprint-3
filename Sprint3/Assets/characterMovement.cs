@@ -20,6 +20,8 @@ public class characterMovement : MonoBehaviour
     const string PLAYER_IDLE = "Idle";
     const string PLAYER_WALK = "Walk";
 
+    public bool canchange = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,5 +79,19 @@ public class characterMovement : MonoBehaviour
 
         //Update current state
         currentState = newState;
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.name == "boxcamera")
+        {
+            canchange = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.name == "boxcamera")
+        {
+            canchange = false;
+        }
     }
 }
