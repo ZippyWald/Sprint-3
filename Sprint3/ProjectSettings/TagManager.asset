@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Flashlight
   - Walls
+  - Diamond
+  - Closet
+  - Start
+  - Indoors
+  - respawn
+  - end
   layers:
   - Default
   - TransparentFX
@@ -13,7 +19,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Nothing
   - 
   - 
   - 

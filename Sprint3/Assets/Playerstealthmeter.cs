@@ -2,24 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
+using TMPro;
 
 public class Playerstealthmeter : MonoBehaviour
 {
+    public characterMovement playerrespawn;
     public Sprite[] eyestatus;
     public bool islooking;
-    float eyebar;
+    public float eyebar;
     public Image eye;
     public Image eyemeter;
     public float eyemeterspeed;
+    public float eyemeterspeeddeplete = 30;
+    public Light2D globallight;
+    public TMPro.TextMeshProUGUI hardmode;
+    public TMPro.TextMeshProUGUI easymode;
+    bool easymodeenabled = true;
+
+    float textimer;
+
     // Start is called before the first frame update
     void Start()
     {
         eyebar = 0;
+        easymodeenabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.H) && easymodeenabled == true && textimer == 0 )
+        {
+            hardmode.enabled = true;
+            textimer = 2;
+            eyemeterspeed = 60;
+            easymodeenabled = false;
+
+        }
+        if (Input.GetKeyDown(KeyCode.H) && easymodeenabled == false && textimer == 0)
+        {
+            easymode.enabled = true;
+            textimer = 2;
+            eyemeterspeed = 30;
+            easymodeenabled = true;
+
+        }
+        if (textimer > 0)
+        {
+            textimer -= Time.deltaTime;
+        }
+        if (textimer <= 0)
+        {
+            textimer = 0;
+            hardmode.enabled = false;
+            easymode.enabled = false;
+        }
+       
      if (islooking == false)
         {
             if (eyebar < 0)
@@ -28,7 +67,7 @@ public class Playerstealthmeter : MonoBehaviour
             }
             if (eyebar >= 0)
             {
-                eyebar -= eyemeterspeed * Time.deltaTime;
+                eyebar -= eyemeterspeeddeplete * Time.deltaTime;
             }
             
 
@@ -80,6 +119,15 @@ public class Playerstealthmeter : MonoBehaviour
         if (eyebar >=  100)
         {
             eye.sprite = eyestatus[9];
+            
+        }
+        if (eyebar >= 100)
+        {
+            globallight.color = Color.red;
+        }
+        if (eyebar < 100)
+        {
+            globallight.color = Color.white;
         }
         if (eyebar < 60)
         {
@@ -88,13 +136,17 @@ public class Playerstealthmeter : MonoBehaviour
     }
     void Caught()
     {
-        if (eyebar < 100)
+        if (eyebar < 110)
         {
             eyebar += eyemeterspeed * Time.deltaTime;
         }
-        if (eyebar >= 100)
+        if (eyebar >= 110)
         {
-            eyebar = 100;
+            eyebar = 110;
+            playerrespawn.respawn = true;
+
+
+
         }
         
     }

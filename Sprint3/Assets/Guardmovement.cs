@@ -19,8 +19,9 @@ public class Guardmovement : MonoBehaviour
     public float speed;
     float WPradius = 0.3f;
     float patroltime = 0;
-    float spinspeed = 80;
+    public float spinspeed = 80;
     public Lightscript redlight;
+    public float patroltimer = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +44,7 @@ public class Guardmovement : MonoBehaviour
         // movement
         if (Vector3.Distance(waypoints[current].transform.position, transform.position) < WPradius)
         {
-            patroltime = 2f;
+            patroltime = patroltimer;
             current += 1;
                 if (current >= waypoints.Length)
                 {

@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class characterMovement : MonoBehaviour
 {
     //movement
     public float walkSpeed = 4;
     float speedLimiter = 0.6f;
-    Vector2 movement;
+    public Vector2 movement;
     Rigidbody2D rb;
     //aim
     public Camera Cam;
@@ -21,6 +23,23 @@ public class characterMovement : MonoBehaviour
     const string PLAYER_WALK = "Walk";
 
     public bool canchange = false;
+    bool showtextindoor;
+    bool showintrotext;
+    bool showdiamondtext;
+    public bool showrespawntext;
+    public TMPro.TextMeshProUGUI introtext;
+    public TMPro.TextMeshProUGUI diamondtext;
+    public TMPro.TextMeshProUGUI indoortext;
+    public TMPro.TextMeshProUGUI respawntext;
+    public float indoorcounter = 1.2f;
+    public bool enterindoor =  false;
+    public interactionscript diamondtextprompt;
+    float diamondtextcounter = 2;
+    public Transform playerposition;
+    public float respawntimer = 0.5f;
+    public bool respawn = false;
+    public Playerstealthmeter eyebar;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,14 +47,97 @@ public class characterMovement : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         mousePos = Cam.ScreenToWorldPoint(Input.mousePosition);
+        showintrotext = true;
+        showtextindoor = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        if (respawn == true)
+        {
+            playerposition.position = new Vector3 (48,2,0);
+            showrespawntext = true;
+            eyebar.eyebar = 1f;
+      
+
+
+        }
+
+        if (diamondtextprompt.havediamond == true)
+        {
+            showdiamondtext = true;
+        }
+
+        if (showrespawntext == true)
+        {
+            respawntext.enabled = true;
+ 
+            respawn = false;
+        }
+        if (showrespawntext == false)
+        {
+            respawntext.enabled = false;
+        }
+
+
+        if (showintrotext == true)
+        {
+            introtext.enabled = true;
+        }
+        if (showintrotext == false)
+        {
+            introtext.enabled = false;
+        }
+        if (showdiamondtext == true)
+        {
+            diamondtext.enabled = true;
+            diamondtextcounter -= Time.deltaTime;
+        }
+        if (diamondtextcounter <= 0)
+        {
+            showdiamondtext = false;
+            diamondtextcounter = 0;
+
+        }
+        if (showdiamondtext == false)
+        {
+            diamondtext.enabled = false;
+        }
+        if (showtextindoor == true)
+        {
+            indoortext.enabled = true;
+            indoorcounter -= Time.deltaTime;
+        }
+        if (showtextindoor == false)
+        {
+            indoortext.enabled = false;
+        }
+        if (indoorcounter <= 0)
+        {
+            showtextindoor = false;
+            indoorcounter = -1;
+            enterindoor = true;
+        }
+
+
+
+        if (gameObject.layer == 0)
+        { 
         mousePos = Cam.ScreenToWorldPoint(Input.mousePosition);
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        }
+        if (gameObject.layer == 6)
+        {
+            movement.x = 0;
+            movement.y = 0;
+        }
     }
     private void FixedUpdate()
     {
@@ -86,6 +188,10 @@ public class characterMovement : MonoBehaviour
         {
             canchange = true;
         }
+
+
+
+
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -93,5 +199,21 @@ public class characterMovement : MonoBehaviour
         {
             canchange = false;
         }
+        if (other.tag == "Start")
+        {
+            showintrotext = false;
+        }
+        if (other.tag == "Indoors" && diamondtextprompt.havediamond != true)
+        {
+             showtextindoor = true;
+
+        }
+        if (other.tag == "respawn")
+        {
+            showrespawntext = false;
+        }
+
+
     }
+
 }

@@ -280,6 +280,10 @@ PrefabInstance:
       propertyPath: visibility
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7509740980508148662, guid: 374a89492c5add647bd9ad5ca76d49db, type: 3}
+      propertyPath: flashlightlength
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 374a89492c5add647bd9ad5ca76d49db, type: 3}
 --- !u!4 &4551073743128424710 stripped
