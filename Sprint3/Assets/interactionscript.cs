@@ -54,7 +54,7 @@ public class interactionscript : MonoBehaviour
         if (endtimer <= 0 && reachend == true && funnytimer == 0 && funnytext.enabled == false)
         {
             endtimer = 0;
-            funnytimer = 1.5f;
+            funnytimer = 2.5f;
             funnytext.enabled = true;
             endtext.enabled = false;
 
